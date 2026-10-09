@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Client app launch | Ramage Law Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1D243F; --harbor:#1D243F; --brass:#9A7535; --brass-soft:#E2C383;
+  --paper:#F3F4F6; --card:#FFFFFF; --line:#DCE0E6; --text:#112337; --muted:#566070;
+  --wash:#EEF1F5; --ok:#2F6B4F; --ok-bg:#E3F0E8; --warn:#8A5A12; --warn-bg:#F7ECD6;
+  --info:#204CE5; --info-bg:#E6ECFD; --stop:#7A3B3B; --stop-bg:#F3E3E3;
+  --serif:"Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans:"Manrope", "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A1724; --card:#102234; --line:#24384F; --text:#E7ECF2; --muted:#A2AEBE;
+    --wash:#15293E; --brass:#E2C383; --ok:#8CCBA9; --ok-bg:#163527; --warn:#E9C27A; --warn-bg:#3A2C12;
+    --info:#9DB4FF; --info-bg:#1B2A55; --stop:#E5A3A3; --stop-bg:#3A1E1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0A1724; --card:#102234; --line:#24384F; --text:#E7ECF2; --muted:#A2AEBE;
+  --wash:#15293E; --brass:#E2C383; --ok:#8CCBA9; --ok-bg:#163527; --warn:#E9C27A; --warn-bg:#3A2C12;
+  --info:#9DB4FF; --info-bg:#1B2A55; --stop:#E5A3A3; --stop-bg:#3A1E1E; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:inherit}
+button,select,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:4px}
+
+/* Masthead */
+.mast{background:var(--harbor);color:#F4F1E8;position:relative;overflow:hidden}
+.mast::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--brass-soft)}
+.mast-in{max-width:1240px;margin:0 auto;padding:22px 24px 40px}
+.brandbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.wordmark{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.wordmark{display:block;line-height:0}
+.logo{display:block;width:auto;max-width:100%}
+.mail-banner{background:#1D243F;padding:36px 20px;display:flex;justify-content:center}
+.mail-banner .logo{max-width:min(300px,90%);height:auto}
+@media (max-width:520px){.mast .logo{height:44px}}
+.logbtn{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(226,195,131,.55);background:transparent;color:#F4F1E8;border-radius:999px;padding:8px 16px;cursor:pointer;text-decoration:none;font-weight:600;font-size:14px}
+.logbtn:hover{background:rgba(226,195,131,.12)}
+.logbtn .n{background:var(--brass-soft);color:var(--harbor);border-radius:999px;min-width:24px;padding:1px 8px;text-align:center;font-size:13px}
+.hero{margin-top:44px;display:grid;gap:12px}
+.hero h1{font:600 clamp(44px,7vw,78px)/.95 var(--serif);margin:0;letter-spacing:-.01em}
+.hero p{margin:0;max-width:62ch;color:#C9D3DE;font-size:17px}
+.byline{font-size:14px;color:#9FB0C2}
+
+/* Road to launch track */
+.track{margin-top:40px;position:relative}
+.track ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;position:relative}
+.track ol::before{content:"";position:absolute;left:22px;right:22px;top:22px;height:2px;background:rgba(226,195,131,.35)}
+.station{position:relative;display:grid;gap:10px;justify-items:start;text-decoration:none}
+.dot{width:46px;height:46px;border-radius:50%;background:var(--harbor);border:2px solid var(--brass-soft);display:grid;place-items:center;font:700 20px/1 var(--serif);color:var(--brass-soft);position:relative;z-index:1}
+.station.done .dot{background:var(--brass-soft);color:var(--harbor)}
+.station .t{font-weight:600;font-size:15px;line-height:1.3;max-width:16ch}
+.station .p{font-size:13px;color:#9FB0C2}
+.track-note{margin-top:22px;font-size:14px;color:#C9D3DE;max-width:70ch}
+.track-note strong{color:var(--brass-soft);font-weight:600}
+@media (max-width:760px){
+  .track ol{grid-template-columns:1fr;gap:14px}
+  .track ol::before{left:22px;right:auto;top:22px;bottom:22px;width:2px;height:auto}
+  .station{grid-template-columns:46px 1fr;align-items:center;column-gap:14px;row-gap:0}
+  .station .dot{grid-row:span 2}
+}
+
+/* Layout */
+.wrap{max-width:1240px;margin:0 auto;padding:40px 24px 80px}
+.layout{display:grid;gap:40px}
+@media (min-width:1100px){.layout{grid-template-columns:minmax(0,1fr) 400px;gap:48px;align-items:start}}
+main{min-width:0}
+section.block{margin-bottom:64px}
+h2{font:600 40px/1.05 var(--serif);margin:0 0 8px}
+.lede{color:var(--muted);margin:0 0 28px;max-width:66ch}
+.callout{border-left:3px solid var(--brass);background:var(--card);padding:14px 18px;border-radius:0 8px 8px 0;margin:0 0 28px;max-width:72ch}
+
+/* Steps */
+.step{display:grid;grid-template-columns:64px minmax(0,1fr);gap:20px;padding:26px 0;border-top:1px solid var(--line)}
+.step:last-child{border-bottom:1px solid var(--line)}
+.step .num{font:600 56px/.9 var(--serif);color:var(--brass)}
+.step h3{font:700 19px/1.3 var(--sans);margin:4px 0 4px}
+.step .sum{margin:0 0 14px;color:var(--muted)}
+.step-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.checks li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:start;gap:6px;padding:6px 8px;border-radius:8px}
+.checks li:hover{background:var(--wash)}
+.checks input{width:18px;height:18px;margin:4px 0 0;accent-color:var(--navy);cursor:pointer}
+:root[data-theme="dark"] .checks input{accent-color:var(--brass-soft)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .checks input{accent-color:var(--brass-soft)}}
+.checks label{cursor:pointer}
+.checks li.is-done label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.who-done{display:block;font-size:12.5px;color:var(--muted);text-decoration:none}
+.checks input:disabled{cursor:not-allowed}
+.checks input:disabled + label{cursor:default}
+
+/* Note buttons */
+.note-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+.note-btn:hover{border-color:var(--brass);color:var(--text)}
+.note-btn .c{color:var(--brass)}
+.note-btn.has-open{border-color:var(--warn);color:var(--warn)}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th,td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font-size:13px;font-weight:700;color:var(--muted);background:var(--wash)}
+td.k{font-weight:600;width:34%}
+td.act{width:1%;white-space:nowrap}
+.chip{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:6px}
+.chip.todo{background:var(--warn-bg);color:var(--warn)}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.unset{background:var(--stop-bg);color:var(--stop)}
+code.v{font:600 14px/1.4 var(--sans);background:var(--wash);padding:2px 8px;border-radius:6px}
+
+/* Announcement preview */
+.ann{display:grid;gap:24px}
+@media (min-width:860px){.ann{grid-template-columns:minmax(0,1fr) 300px;align-items:start}}
+.mail{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.mail-head{padding:14px 18px;border-bottom:1px solid var(--line);display:grid;gap:4px;background:var(--wash)}
+.mail-head .row{display:flex;gap:10px;font-size:14px}
+.mail-head .row b{min-width:58px;color:var(--muted);font-weight:600}
+.mail-body{padding:22px 24px;font-size:15.5px;max-width:64ch}
+.mail-body p{margin:0 0 14px}
+.mail-body ul{margin:0 0 14px;padding-left:20px}
+.mf{background:var(--info-bg);color:var(--info);border-radius:5px;padding:0 5px;font-weight:600;white-space:nowrap}
+.tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:transparent;padding:8px 14px;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--brass)}
+.signin{background:var(--wash);border-radius:8px;padding:10px 14px;font-weight:600}
+.lnk{color:var(--info);text-decoration:underline;overflow-wrap:anywhere}
+.cta{display:inline-block;background:var(--navy);color:#fff;border-radius:8px;padding:10px 20px;font-weight:700}
+.sig{font-style:normal;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:6px}
+.sms{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px 16px}
+.sms .from{font-size:12.5px;color:var(--muted);text-align:center;margin-bottom:12px}
+.bubble{background:var(--wash);border-radius:18px 18px 18px 4px;padding:12px 14px;font-size:15px}
+.ann-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+.ann-foot small{color:var(--muted)}
+
+/* Change log */
+aside.log{background:var(--card);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-width:0}
+@media (min-width:1100px){aside.log{position:sticky;top:calc(16px + env(safe-area-inset-top,0px));max-height:calc(100vh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}}
+.log-head{padding:20px 20px 14px;border-bottom:1px solid var(--line)}
+.log-head h2{font-size:32px;margin:0}
+.log-head p{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.filters button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 11px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.filters button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+:root[data-theme="dark"] .filters button[aria-pressed="true"]{background:var(--brass-soft);border-color:var(--brass-soft);color:var(--harbor)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .filters button[aria-pressed="true"]{background:var(--brass-soft);border-color:var(--brass-soft);color:var(--harbor)}}
+.subfilters{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.subfilters select{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 8px;font-size:13px;max-width:100%}
+.itemchip{display:inline-flex;gap:6px;align-items:center;background:var(--wash);border-radius:999px;padding:3px 6px 3px 11px;font-size:12.5px;font-weight:600}
+.itemchip button{border:0;background:transparent;cursor:pointer;font-size:15px;line-height:1;padding:0 4px;color:var(--muted)}
+
+.composer{padding:16px 20px;border-bottom:1px solid var(--line);display:grid;gap:10px;background:var(--wash)}
+.composer .types{display:flex;flex-wrap:wrap;gap:6px}
+.composer .types label{display:inline-flex}
+.composer .types input{position:absolute;opacity:0;pointer-events:none}
+.composer .types span{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:600;cursor:pointer}
+.composer .types input:checked + span{border-color:var(--brass);box-shadow:inset 0 0 0 1px var(--brass)}
+.composer .types input:focus-visible + span{outline:2px solid var(--brass);outline-offset:2px}
+.composer select,.composer textarea{width:100%;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 10px;font-size:14px}
+.composer textarea{min-height:84px;resize:vertical}
+.composer .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.composer .hint{font-size:12.5px;color:var(--muted)}
+.primary{background:var(--navy);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:700;font-size:14px;cursor:pointer}
+:root[data-theme="dark"] .primary{background:var(--brass-soft);color:var(--harbor)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .primary{background:var(--brass-soft);color:var(--harbor)}}
+.primary:disabled{opacity:.5;cursor:not-allowed}
+.me{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.me img{width:22px;height:22px;border-radius:50%}
+
+.entries{overflow-y:auto;padding:6px 0;min-height:120px}
+.entry{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.entry:last-child{border-bottom:0}
+.entry .av{width:34px;height:34px;border-radius:50%;object-fit:cover;background:var(--wash)}
+.entry .av.sys{display:grid;place-items:center;background:var(--harbor);color:var(--brass-soft);font:700 16px/1 var(--serif)}
+.e-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+.e-top .nm{font-weight:700;font-size:14.5px}
+.e-top time{font-size:12.5px;color:var(--muted)}
+.e-on{font-size:12.5px;color:var(--muted);margin-top:2px}
+.e-on button{border:0;background:none;padding:0;color:var(--text);font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;font-size:12.5px;text-align:left}
+.e-text{margin:6px 0 0;font-size:14.5px;white-space:pre-wrap;overflow-wrap:anywhere}
+.e-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.tag{font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px}
+.tag.change{background:var(--warn-bg);color:var(--warn)}
+.tag.question{background:var(--info-bg);color:var(--info)}
+.tag.comment{background:var(--wash);color:var(--muted)}
+.tag.approval{background:var(--ok-bg);color:var(--ok)}
+.tag.update{background:var(--harbor);color:var(--brass-soft)}
+.tag.check{background:var(--wash);color:var(--muted)}
+.st{font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;border:1px solid var(--line)}
+.st.open{color:var(--warn);border-color:var(--warn)}
+.st.progress{color:var(--info);border-color:var(--info)}
+.st.done{color:var(--ok);border-color:var(--ok)}
+.st.wontdo{color:var(--muted)}
+.st-select{font-size:12.5px;border:1px solid var(--line);background:var(--card);border-radius:6px;padding:2px 6px}
+.hist{font-size:12px;color:var(--muted);margin-top:6px}
+.empty{padding:28px 20px;color:var(--muted);font-size:14px}
+.notice{padding:12px 20px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--line)}
+.err{color:var(--stop)}
+.flash{animation:flash 1.4s ease-out}
+@keyframes flash{from{background:var(--warn-bg)}to{background:transparent}}
+
+.log-title{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.refresh{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.refresh:hover{border-color:var(--brass);color:var(--text)}
+.log-foot{padding:12px 20px;border-top:1px solid var(--line);font-size:13px;font-weight:600}
+.log-foot a{color:var(--info)}
+.gh{font-size:12px;font-weight:600;color:var(--info)}
+.box{width:18px;height:18px;border:1.5px solid var(--muted);border-radius:4px;margin-top:4px;display:grid;place-items:center}
+.is-done .box{background:var(--navy);border-color:var(--navy)}
+.is-done .box::after{content:"✓";color:#fff;font-size:12px;line-height:1}
+.checks li.is-done > span:nth-child(2){color:var(--muted)}
+.footer-note{margin-top:6px}
+.topright{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.whoami{font-size:13.5px;color:#C9D3DE}
+.signout{font-size:13.5px;color:#C9D3DE;text-decoration:underline;text-underline-offset:3px}
+.signout:hover{color:#fff}
+.av.init{display:grid;place-items:center;font:700 13px/1 var(--sans);color:#fff}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="rlg-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4DA92"/><stop offset=".45" stop-color="#C8973F"/><stop offset=".75" stop-color="#E9C775"/><stop offset="1" stop-color="#B8862F"/></linearGradient></defs></svg>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="brandbar">
+      <a class="wordmark" href="#top" id="top"><svg class="logo" viewBox="0 0 320 64" height="56" role="img" aria-label="The Ramage Law Group"><circle cx="32" cy="32" r="28.5" fill="none" stroke="url(#rlg-gold)" stroke-width="2.4"/><circle cx="33.2" cy="30.8" r="26.6" fill="none" stroke="url(#rlg-gold)" stroke-width=".8" opacity=".75"/><text x="32" y="44.5" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="600" font-size="37" fill="url(#rlg-gold)">R</text><line x1="80" y1="5" x2="80" y2="59" stroke="#CFA352" stroke-width="1.1"/><text x="95" y="38" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="500" font-size="25" fill="#FFFFFF" textLength="212" lengthAdjust="spacingAndGlyphs">The Ramage Law Group</text><line x1="95" y1="48" x2="310" y2="48" stroke="#CFA352" stroke-width="1.1"/></svg></a>
+      <div class="topright">
+        <span class="whoami" id="whoami"></span>
+        <a class="signout" href="/auth/logout">Sign out</a>
+        <a class="logbtn" href="#change-log">Change log <span class="n" id="openCount" title="Open items needing developer action">0</span></a>
+      </div>
+    </div>
+    <div class="hero">
+      <h1>Client app launch</h1>
+      <p>Everything left between today and launch: next steps, settings still to fill in, the announcement draft, and what we're changing from Thomas and Sharon's review.</p>
+      <div class="byline">Prepared by Joseph Dinsmore, October 8, 2026</div>
+    </div>
+    <nav class="track" aria-label="Road to launch">
+      <ol>
+        <li><a class="station" href="#step-1" data-station="1"><span class="dot">1</span><span class="t">App and folder discussion</span><span class="p" data-progress="1"></span></a></li>
+        <li><a class="station" href="#step-2" data-station="2"><span class="dot">2</span><span class="t">Pre-launch email</span><span class="p" data-progress="2"></span></a></li>
+        <li><a class="station" href="#step-3" data-station="3"><span class="dot">3</span><span class="t">Staff training</span><span class="p" data-progress="3"></span></a></li>
+        <li><a class="station" href="#step-4" data-station="4"><span class="dot">4</span><span class="t">Launch email</span><span class="p" data-progress="4"></span></a></li>
+        <li><a class="station" href="#step-5" data-station="5"><span class="dot">5</span><span class="t">Existing-client training</span><span class="p" data-progress="5"></span></a></li>
+      </ol>
+      <p class="track-note"><strong>Steps 2 and 3 can run in the same weeks.</strong> The launch email waits until staff training is done.</p>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="layout">
+<main>
+
+  <section class="block" id="next-steps">
+    <h2>Next steps</h2>
+    <p class="callout">Train staff before the launch email goes out, so whoever picks up the phone can answer "how do I sign in?" on day one.</p>
+
+    <div class="step" id="step-1" data-item="step-1" data-label="Step 1: App and folder discussion">
+      <div class="num">1</div>
+      <div>
+        <div class="step-head"><h3>App and folder structure discussion with Yolanda, Marissa and Katie</h3><span data-notes="step-1"></span></div>
+        <p class="sum">A working session to walk through the app and how client folders are set up in Egnyte. About 30 minutes.</p>
+        <ul class="checks">
+          <li data-check="s1-f1">Walk through the app from the client side and the staff side.</li>
+          <li data-check="s1-f2">Review the Egnyte folder structure: the client uploads folder, the new firm-to-client folder, and the dated day folders.</li>
+          <li data-check="s1-f3">Confirm what changes in Yolanda's folder template so new matters get the right folders.</li>
+          <li data-check="s1-f4">Capture any feedback in the change log on this page.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step" id="step-2" data-item="step-2" data-label="Step 2: Pre-launch email">
+      <div class="num">2</div>
+      <div>
+        <div class="step-head"><h3>Pre-launch email</h3><span data-notes="step-2"></span></div>
+        <p class="sum">A heads-up only. Clients don't need to do anything yet.</p>
+        <ul class="checks">
+          <li data-check="s2-a">Send 2 to 3 weeks before launch, once the stakeholders approve the wording.</li>
+          <li data-check="s2-b">Send a test to yourself from Settings and read it on your phone first.</li>
+          <li data-check="s2-c">Send the email to every client with an open matter. Texts go only to clients who opted in.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step" id="step-3" data-item="step-3" data-label="Step 3: Staff training">
+      <div class="num">3</div>
+      <div>
+        <div class="step-head"><h3>Staff training</h3><span data-notes="step-3"></span></div>
+        <p class="sum">Before the launch email, so staff are a step ahead of clients.</p>
+        <ul class="checks">
+          <li data-check="s3-a">One 45-minute session, recorded for anyone who misses it.</li>
+          <li data-check="s3-b">Everyone signs in on their phone and desktop during the session, not afterwards.</li>
+          <li data-check="s3-c">Cover replying to messages, saved replies, assigning tasks with documents, upload alerts, sending documents to clients, and the incident journal.</li>
+          <li data-check="s3-d">Practise on the TESTING matter: each person sends a message, assigns a task and uploads a document.</li>
+          <li data-check="s3-e">Point staff to Help &amp; Guides in Settings for anything after the session.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step" id="step-4" data-item="step-4" data-label="Step 4: Launch email">
+      <div class="num">4</div>
+      <div>
+        <div class="step-head"><h3>Launch email</h3><span data-notes="step-4"></span></div>
+        <p class="sum">The one that gets clients signed in.</p>
+        <ul class="checks">
+          <li data-check="s4-a">Contains the app download links, their user ID, the Create your password button, and written step-by-step instructions.</li>
+          <li data-check="s4-b">Send in batches of about 25 a day rather than all at once, so staff can keep up with questions and it stays well inside the daily Egnyte limit as clients open their folders for the first time.</li>
+          <li data-check="s4-c">Two business days later, check App Usage, then "Who hasn't joined", and resend those invites by text.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step" id="step-5" data-item="step-5" data-label="Step 5: Existing-client training">
+      <div class="num">5</div>
+      <div>
+        <div class="step-head"><h3>Existing-client training</h3><span data-notes="step-5"></span></div>
+        <p class="sum">Most clients won't come to a session, so make help available in the forms they actually use.</p>
+        <ul class="checks">
+          <li data-check="s5-a">A 2- to 3-minute screen-recorded video, linked from the launch email.</li>
+          <li data-check="s5-b">A one-page printable guide (PDF) for the front desk and in-person meetings.</li>
+          <li data-check="s5-c">Two optional 15-minute group video calls in launch week.</li>
+          <li data-check="s5-d">The app's own first-sign-in walkthrough covers the rest.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="settings">
+    <h2>Settings to fill in later</h2>
+    <p class="lede">Values that still need entering before the matching step can go ahead.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Item</th><th scope="col">Status</th><th scope="col"><span class="sr">Notes</span></th></tr></thead>
+        <tbody>
+          <tr data-item="set-folder" data-label="Setting: Firm-to-client folder name">
+            <td class="k">Firm-to-client folder name</td>
+            <td><span class="chip todo">To enter in Settings</span><br>You enter it in Settings, next to the client uploads folder. Client notices stay off until you turn them on.</td>
+            <td class="act"><span data-notes="set-folder"></span></td>
+          </tr>
+          <tr data-item="set-day" data-label="Setting: Day-folder name">
+            <td class="k">Day-folder name</td>
+            <td><span class="chip ok">Agreed</span><br><code class="v">YYYY.MM.DD - Sent</code></td>
+            <td class="act"><span data-notes="set-day"></span></td>
+          </tr>
+          <tr data-item="set-date" data-label="Setting: Launch date">
+            <td class="k">Launch date</td>
+            <td><span class="chip unset">Not set</span><br>Filled in on the announcement tool before sending.</td>
+            <td class="act"><span data-notes="set-date"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="announcement">
+    <h2>Pre-launch announcement</h2>
+    <p class="lede">The "Send pre-launch announcement" tool in Settings sends this to clients with open matters, by email and optionally by text. It has a launch-date field (blank until set), a preview, and a "Send a test to me" button. Clients get one of two emails, depending on whether they've signed in to the client portal before. The text message is the same for everyone. Highlighted fields fill in automatically.</p>
+    <div class="ann">
+      <div>
+        <div class="tabs" role="tablist" aria-label="Email version">
+          <button type="button" role="tab" id="tab-ret" aria-controls="panel-ret" aria-selected="true">Signed in before</button>
+          <button type="button" role="tab" id="tab-new" aria-controls="panel-new" aria-selected="false" tabindex="-1">Never signed in</button>
+        </div>
+        <div role="tabpanel" id="panel-ret" aria-labelledby="tab-ret" data-item="ann-email" data-label="Announcement: email, signed in before">
+        <div class="mail">
+          <div class="mail-head">
+            <div class="row"><b>From</b><span>The Ramage Law Group</span></div>
+            <div class="row"><b>Subject</b><span style="font-weight:700">Your case, at your fingertips: the Ramage Law app is coming</span></div>
+          </div>
+          <div class="mail-banner"><svg class="logo" viewBox="0 0 320 64" height="58" role="img" aria-label="The Ramage Law Group"><circle cx="32" cy="32" r="28.5" fill="none" stroke="url(#rlg-gold)" stroke-width="2.4"/><circle cx="33.2" cy="30.8" r="26.6" fill="none" stroke="url(#rlg-gold)" stroke-width=".8" opacity=".75"/><text x="32" y="44.5" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="600" font-size="37" fill="url(#rlg-gold)">R</text><line x1="80" y1="5" x2="80" y2="59" stroke="#CFA352" stroke-width="1.1"/><text x="95" y="38" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="500" font-size="25" fill="#FFFFFF" textLength="212" lengthAdjust="spacingAndGlyphs">The Ramage Law Group</text><line x1="95" y1="48" x2="310" y2="48" stroke="#CFA352" stroke-width="1.1"/></svg></div>
+          <div class="mail-body">
+            <p>Hi <span class="mf">first name</span>,</p>
+            <p>On <span class="mf">launch date</span>, The Ramage Law Group is launching a client app that puts your case at your fingertips, 24 hours a day, 7 days a week.</p>
+            <p>With the app you'll be able to:</p>
+            <ul>
+              <li>Message your legal team securely, any time</li>
+              <li>See where your case stands and what happens next</li>
+              <li>Send us documents straight from your phone or computer</li>
+              <li>See your court dates and appointments, with reminders</li>
+              <li>Review and sign documents</li>
+              <li>View your invoices and balance</li>
+            </ul>
+            <p>You'll sign in to the app with the same email address and password you use for our client portal, so please take a minute now to make sure you can sign in:</p>
+            <p class="signin">Your sign-in email: <span class="mf">sign-in email</span></p>
+            <p>We noticed you've signed in to our client portal before. Please check you still can: go to <span class="lnk">https://ramagelawportal.com/wp-login.php</span> and sign in with your email address and password. If you can't remember your password, choose "Lost your password?" on that page and we'll email you a link to set a new one.</p>
+            <p>Shortly before launch we'll send you a link to download the app and simple step-by-step instructions. We'll also offer a short walkthrough if you'd like help getting started.</p>
+            <p>If you have questions in the meantime, reply to this email or call our office.</p>
+            <p>Thank you for trusting us with your case.</p>
+            <p>The Ramage Law Group</p>
+            <address class="sig">The Ramage Law Group<br>8951 Collin McKinney Parkway, Suite 1401<br>McKinney TX, 75070<br>972.562.9890</address>
+          </div>
+        </div>
+          <div class="ann-foot"><small>For clients who have signed in to the client portal before</small><span data-notes="ann-email"></span></div>
+        </div>
+        <div role="tabpanel" id="panel-new" aria-labelledby="tab-new" data-item="ann-email-new" data-label="Announcement: email, never signed in" hidden>
+        <div class="mail">
+          <div class="mail-head">
+            <div class="row"><b>From</b><span>The Ramage Law Group</span></div>
+            <div class="row"><b>Subject</b><span style="font-weight:700">Your case, at your fingertips: the Ramage Law app is coming</span></div>
+          </div>
+          <div class="mail-banner"><svg class="logo" viewBox="0 0 320 64" height="58" role="img" aria-label="The Ramage Law Group"><circle cx="32" cy="32" r="28.5" fill="none" stroke="url(#rlg-gold)" stroke-width="2.4"/><circle cx="33.2" cy="30.8" r="26.6" fill="none" stroke="url(#rlg-gold)" stroke-width=".8" opacity=".75"/><text x="32" y="44.5" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="600" font-size="37" fill="url(#rlg-gold)">R</text><line x1="80" y1="5" x2="80" y2="59" stroke="#CFA352" stroke-width="1.1"/><text x="95" y="38" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="500" font-size="25" fill="#FFFFFF" textLength="212" lengthAdjust="spacingAndGlyphs">The Ramage Law Group</text><line x1="95" y1="48" x2="310" y2="48" stroke="#CFA352" stroke-width="1.1"/></svg></div>
+          <div class="mail-body">
+            <p>Hi <span class="mf">first name</span>,</p>
+            <p>On <span class="mf">launch date</span>, The Ramage Law Group is launching a client app that puts your case at your fingertips, 24 hours a day, 7 days a week.</p>
+            <p>With the app you'll be able to:</p>
+            <ul>
+              <li>Message your legal team securely, any time</li>
+              <li>See where your case stands and what happens next</li>
+              <li>Send us documents straight from your phone or computer</li>
+              <li>See your court dates and appointments, with reminders</li>
+              <li>Review and sign documents</li>
+              <li>View your invoices and balance</li>
+            </ul>
+            <p>You'll sign in to the app with the same email address and password you use for our client portal, so please take a minute now to make sure you can sign in:</p>
+            <p class="signin">Your sign-in email: <span class="mf">sign-in email</span></p>
+            <p>Your client portal account is ready, but a password hasn't been set yet. Tap "Create your password" below and choose one. Then go to <span class="lnk">https://ramagelawportal.com/wp-login.php</span> and sign in with your email address and that password to make sure it works.</p>
+            <p><span class="cta">Create your password</span></p>
+            <p>Shortly before launch we'll send you a link to download the app and simple step-by-step instructions. We'll also offer a short walkthrough if you'd like help getting started.</p>
+            <p>If you have questions in the meantime, reply to this email or call our office.</p>
+            <p>Thank you for trusting us with your case.</p>
+            <p>The Ramage Law Group</p>
+            <address class="sig">The Ramage Law Group<br>8951 Collin McKinney Parkway, Suite 1401<br>McKinney TX, 75070<br>972.562.9890</address>
+          </div>
+        </div>
+          <div class="ann-foot"><small>For clients whose portal account has no password yet</small><span data-notes="ann-email-new"></span></div>
+        </div>
+      </div>
+      <div data-item="ann-text" data-label="Announcement: text message">
+        <div class="sms">
+          <div class="from">Text message</div>
+          <div class="bubble">Ramage Law Group: On <span class="mf">launch date</span> we're launching a client app with your case at your fingertips 24/7: messages, documents, court dates and more. Watch for download and sign-in instructions soon. Reply STOP to opt out.</div>
+        </div>
+        <div class="ann-foot"><small>Opted-in clients only</small><span data-notes="ann-text"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="review">
+    <h2>What we're changing from Thomas and Sharon's review</h2>
+    <p class="lede">Each concern raised in the review, and how the app now handles it.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Concern or suggestion</th><th scope="col">What we're doing</th><th scope="col"><span class="sr">Notes</span></th></tr></thead>
+        <tbody>
+          <tr data-item="r-task-error" data-label="Review: App error when assigning a task"><td class="k">App error when assigning a task</td><td>Fixed first, with an automated test that repeats the exact steps.</td><td class="act"><span data-notes="r-task-error"></span></td></tr>
+          <tr data-item="r-firm-docs" data-label="Review: Documents the firm sends to clients"><td class="k">A place for documents the firm sends to clients</td><td>A new folder in each client's Egnyte folder, set in Settings, with dated "- Sent" day folders. The client gets one push and email per batch: "Your legal team sent documents for review". Off until you turn it on.</td><td class="act"><span data-notes="r-firm-docs"></span></td></tr>
+          <tr data-item="r-attach" data-label="Review: Attaching documents to tasks"><td class="k">Attaching documents when assigning a task</td><td>Staff can attach files to a task. They go in the same folder, and the client's task becomes "review this document" with Looks correct and Report an issue.</td><td class="act"><span data-notes="r-attach"></span></td></tr>
+          <tr data-item="r-egnyte-direct" data-label="Review: Files saved straight into Egnyte"><td class="k">Files saved straight into Egnyte</td><td>Picked up within about 15 minutes, moved into that day's folder, and the client is notified. Nothing is ever deleted.</td><td class="act"><span data-notes="r-egnyte-direct"></span></td></tr>
+          <tr data-item="r-upload-alerts" data-label="Review: Upload alerts for staff"><td class="k">Staff not knowing a client uploaded something</td><td>An immediate push and email to the matter's attorney, paralegal and notify list, replacing the 8 am digest. Uploads close together are grouped into one alert.</td><td class="act"><span data-notes="r-upload-alerts"></span></td></tr>
+          <tr data-item="r-signin" data-label="Review: Client sign-in"><td class="k">Clients struggling to sign in</td><td>The invite states their user ID and has a "Create your password" button. The app gets "First time here?" and "Forgot password?". Written setup steps go in every invite email and text.</td><td class="act"><span data-notes="r-signin"></span></td></tr>
+          <tr data-item="r-trust" data-label="Review: Staff trust and balance display"><td class="k">Staff seeing $0 trust when a client owes money</td><td>Staff alerts and the matter screen show the outstanding balance as well as trust.</td><td class="act"><span data-notes="r-trust"></span></td></tr>
+          <tr data-item="r-portal" data-label="Review: Staff still working in the portal"><td class="k">Staff still working in the portal</td><td>A setting hides portal messaging and checklists for staff only, pointing them to the app. Nothing is deleted, and clients aren't affected.</td><td class="act"><span data-notes="r-portal"></span></td></tr>
+          <tr data-item="r-announce" data-label="Review: Telling clients the app is coming"><td class="k">Telling clients the app is coming</td><td>The pre-launch announcement above, sent from Settings by email and text, with a preview and a test send first.</td><td class="act"><span data-notes="r-announce"></span></td></tr>
+          <tr data-item="r-desktop" data-label="Review: Desktop app for staff"><td class="k">Desktop app for staff</td><td>An internal Windows installer is built now. The Mac app ships with the iPhone release.</td><td class="act"><span data-notes="r-desktop"></span></td></tr>
+          <tr data-item="r-folder-match" data-label="Review: Matching clients to Egnyte folders"><td class="k">Human error matching clients to Egnyte folders</td><td>Already guarded: one matter per folder, an immediate email when two clients share a name, a waiting list for former clients' folders, and a "Check every open matter" report. Each staff matter screen will also show the linked folder so a wrong link is easy to spot. This replaces moving OneDrive uploads by hand.</td><td class="act"><span data-notes="r-folder-match"></span></td></tr>
+          <tr data-item="r-terms" data-label="Review: Client terms and FAQ"><td class="k">Client terms and FAQ</td><td>Updated to cover documents from the firm, review tasks and password setup.</td><td class="act"><span data-notes="r-terms"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>Ramage Law Group internal planning page. Only Ramage Law Group staff can open this page. Every note shows the name of the person who wrote it.</footer>
+</main>
+
+<aside class="log" id="change-log" aria-label="Change log">
+  <div class="log-head">
+    <div class="log-title"><h2>Change log</h2><button type="button" class="refresh" id="refreshBtn">Refresh</button></div>
+    <p>Every note shows who wrote it and when. Page updates are listed with their version number.</p>
+    <div class="filters" role="group" aria-label="Show">
+      <button type="button" data-filter="action" aria-pressed="true">Needs developer action <span id="fActionN"></span></button>
+      <button type="button" data-filter="all" aria-pressed="false">All activity</button>
+      <button type="button" data-filter="notes" aria-pressed="false">Notes</button>
+      <button type="button" data-filter="updates" aria-pressed="false">Page updates</button>
+    </div>
+    <div class="subfilters">
+      <label class="sr" for="personFilter">Person</label>
+      <select id="personFilter"><option value="">Everyone</option></select>
+      <span id="itemFilterChip"></span>
+    </div>
+  </div>
+
+  <form class="composer" id="composer">
+    <div class="types" role="radiogroup" aria-label="Note type">
+      <label><input type="radio" name="type" value="change" checked><span>Change request</span></label>
+      <label><input type="radio" name="type" value="question"><span>Question</span></label>
+      <label><input type="radio" name="type" value="comment"><span>Comment</span></label>
+      <label><input type="radio" name="type" value="approval"><span>Approval</span></label>
+    </div>
+    <label class="sr" for="itemSelect">About</label>
+    <select id="itemSelect"></select>
+    <label class="sr" for="noteText">Note</label>
+    <textarea id="noteText" maxlength="4000" placeholder="What should change, or what do you want to ask?"></textarea>
+    <div class="row">
+      <span class="hint" id="postingAs">Posting as you</span>
+      <button class="primary" type="submit" id="postBtn">Add to change log</button>
+    </div>
+  </form>
+  <div class="notice" id="logNotice" hidden></div>
+  <div class="entries" id="entries" aria-live="polite"></div>
+</aside>
+</div>
+</div>
+
+<script>
+/* ======================= SETTINGS: edit these ======================= */
+// Page updates. Add a new entry at the top whenever you change this page.
+var PAGE_UPDATES = [
+  {version:5, date:"2026-10-09", item:"page", text:"Moved to a private site behind Microsoft sign-in. Only @ramagelawfirm.com accounts can open the page or post notes, and no GitHub account is needed."},
+  {version:4, date:"2026-10-09", item:"page", text:"Header updated to The Ramage Law Group logo lockup (gold R seal, divider, underlined name) on the firm navy. The same banner now tops both pre-launch email previews."},
+  {version:3, date:"2026-10-09", item:"ann-email-new", text:"Pre-launch email split into two versions: \"Signed in before\" (check you can still sign in at the portal, with Lost your password? help) and \"Never signed in\" (Create your password button, then test sign-in at the portal). Both include the sign-in email, the portal link, \"call our office\" and the firm's address and phone signature."},
+  {version:2, date:"2026-10-09", item:"step-1", text:"Step 1 changed from a sign-off meeting to an app and folder structure discussion with Yolanda, Marissa and Katie (about 30 minutes)."},
+  {version:1, date:"2026-10-08", item:"page", text:"Page published from the App Launch Announcement doc: next steps, settings, announcement draft, and the changes from Thomas and Sharon's review."}
+];
+
+// Checked-off steps. Add a line like  "s1-f1": "Joseph, Oct 10"  to mark one done.
+var DONE = {
+};
+/* ==================================================================== */
+
+(function(){
+  "use strict";
+  var TYPE_LABEL = {change:"Change request", question:"Question", comment:"Comment", approval:"Approval", update:"Page update"};
+  var STATUS_LABEL = {open:"Open", progress:"In progress", done:"Done", wontdo:"Won't do"};
+  var DEV_TYPES = {change:1, question:1};
+  var S = {entries:[], notes:[], me:null, filter:"action", person:"", item:""};
+  var items = {page:"Whole page"}, checkLabels = {};
+
+  function h(tag, attrs){
+    var el = document.createElement(tag);
+    if (attrs) for (var k in attrs){
+      var v = attrs[k]; if (v == null || v === false) continue;
+      if (k === "text") el.textContent = v;
+      else if (k === "class") el.className = v;
+      else if (k === "style") el.setAttribute("style", v);
+      else if (k.slice(0,2) === "on") el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (var i = 2; i < arguments.length; i++){ var c = arguments[i]; if (c == null) continue; el.appendChild(typeof c === "string" ? document.createTextNode(c) : c); }
+    return el;
+  }
+  var dtf = new Intl.DateTimeFormat(undefined, {month:"short", day:"numeric", year:"numeric", hour:"numeric", minute:"2-digit"});
+  var df = new Intl.DateTimeFormat(undefined, {month:"short", day:"numeric", year:"numeric"});
+  function fmt(iso, dateOnly){ try { return (dateOnly ? df : dtf).format(new Date(iso)); } catch(e){ return ""; } }
+  function rel(iso){
+    var d = (Date.now() - new Date(iso).getTime())/1000;
+    if (!isFinite(d)) return "";
+    if (d < 60) return "just now"; if (d < 3600) return Math.round(d/60) + " min ago";
+    if (d < 86400) return Math.round(d/3600) + " hr ago"; return fmt(iso);
+  }
+  function isActionable(e){ return e.kind === "note" && DEV_TYPES[e.type] && (e.status === "open" || e.status === "progress"); }
+  function notice(msg, isErr){ var n = document.getElementById("logNotice"); n.hidden = !msg; n.textContent = msg || ""; n.classList.toggle("err", !!isErr); }
+  function initials(name){ var p = String(name || "?").trim().split(/\s+/); return ((p[0]||"")[0] || "?").toUpperCase() + ((p.length > 1 ? p[p.length-1][0] : "") || "").toUpperCase(); }
+  function colorFor(s){ var hsh = 0; s = String(s||""); for (var i=0;i<s.length;i++) hsh = (hsh*31 + s.charCodeAt(i)) >>> 0; var pal = ["#1D243F","#2F6B4F","#7A3B3B","#204CE5","#8A5A12","#4B3F72","#2B6777"]; return pal[hsh % pal.length]; }
+
+  function api(path, opts){
+    opts = opts || {};
+    var headers = {"Accept":"application/json"};
+    if (opts.body){ headers["Content-Type"] = "application/json"; headers["X-RLG"] = "1"; }
+    return fetch(path, {method: opts.method || "GET", headers: headers, credentials: "same-origin", body: opts.body ? JSON.stringify(opts.body) : undefined})
+      .then(function(r){
+        if (r.status === 401){ var e = new Error("signed_out"); e.code = "signed_out"; throw e; }
+        return r.json().catch(function(){ return {}; }).then(function(d){ if (!r.ok){ var e2 = new Error(d.error || "error"); e2.code = d.error || "error"; throw e2; } return d; });
+      });
+  }
+  function handleErr(e, fallback){
+    if (e && e.code === "signed_out") notice("Your sign-in has expired. Reload the page to sign in again.", true);
+    else notice(fallback, true);
+  }
+
+  /* ---------- static setup ---------- */
+  document.querySelectorAll("[data-item]").forEach(function(el){ items[el.getAttribute("data-item")] = el.getAttribute("data-label"); });
+  document.querySelectorAll("[data-check]").forEach(function(li){
+    var id = li.getAttribute("data-check"), text = li.textContent.trim(), done = DONE[id];
+    checkLabels[id] = text; li.textContent = "";
+    li.classList.toggle("is-done", !!done);
+    li.appendChild(h("span", {class:"box", "aria-hidden":"true"}));
+    li.appendChild(h("span", null, h("span", {class:"sr", text: done ? "Done: " : "Not done: "}), text, h("span", {class:"who-done", text: done ? "Done: " + done : ""})));
+    li.appendChild(h("span"));
+  });
+  for (var n = 1; n <= 5; n++){
+    var ids = Object.keys(checkLabels).filter(function(k){ return k.indexOf("s"+n+"-") === 0; });
+    var dn = ids.filter(function(k){ return DONE[k]; }).length;
+    var p = document.querySelector('[data-progress="'+n+'"]'); if (p) p.textContent = dn + " of " + ids.length + " done";
+    var st = document.querySelector('[data-station="'+n+'"]'); if (st) st.classList.toggle("done", ids.length > 0 && dn === ids.length);
+  }
+
+  var sel = document.getElementById("itemSelect");
+  Object.keys(items).forEach(function(k){ sel.appendChild(h("option", {value:k, text:"About: " + items[k]})); });
+
+  document.querySelectorAll("[data-notes]").forEach(function(slot){
+    var id = slot.getAttribute("data-notes");
+    var b = h("button", {type:"button", class:"note-btn", "aria-label":"Notes about " + items[id]}, "Add note");
+    b.onclick = function(){ openComposerFor(id); };
+    slot.appendChild(b);
+  });
+  document.querySelectorAll(".filters button").forEach(function(b){
+    b.addEventListener("click", function(){ setFilter(b.getAttribute("data-filter")); });
+  });
+  function setFilter(f){
+    S.filter = f;
+    document.querySelectorAll(".filters button").forEach(function(x){ x.setAttribute("aria-pressed", x.getAttribute("data-filter") === f ? "true" : "false"); });
+    render();
+  }
+  document.getElementById("personFilter").addEventListener("change", function(e){ S.person = e.target.value; render(); });
+  document.getElementById("refreshBtn").addEventListener("click", load);
+
+  function setItemFilter(id){
+    S.item = id || "";
+    var slot = document.getElementById("itemFilterChip"); slot.textContent = "";
+    if (S.item){
+      slot.appendChild(h("span", {class:"itemchip"}, items[S.item] || S.item, h("button", {type:"button", "aria-label":"Clear item filter", onclick:function(){ setItemFilter(""); }}, "×")));
+      if (S.filter !== "all"){ setFilter("all"); return; }
+    }
+    render();
+  }
+  function openComposerFor(id){
+    sel.value = id; setItemFilter(id);
+    document.getElementById("change-log").scrollIntoView({block:"start"});
+    setTimeout(function(){ document.getElementById("noteText").focus({preventScroll:true}); }, 350);
+  }
+  function jumpTo(id){
+    var el = document.querySelector('[data-item="'+id+'"]'); if (!el) return;
+    if (el.hidden && el.getAttribute("role") === "tabpanel"){ var t = document.getElementById(el.getAttribute("aria-labelledby")); if (t) t.click(); }
+    el.scrollIntoView({block:"center"});
+    var target = el.closest("li,tr,.step") || el;
+    target.classList.remove("flash"); void target.offsetWidth; target.classList.add("flash");
+  }
+
+  /* ---------- who's signed in ---------- */
+  api("/auth/me").then(function(me){
+    S.me = me;
+    document.getElementById("whoami").textContent = "Signed in as " + (me.name || me.email);
+    document.getElementById("postingAs").textContent = "Posting as " + (me.name || me.email);
+    render();
+  }).catch(function(e){ handleErr(e, ""); });
+
+  /* ---------- posting a note ---------- */
+  document.getElementById("composer").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var ta = document.getElementById("noteText"), btn = document.getElementById("postBtn"), text = ta.value.trim();
+    if (!text){ ta.focus(); return; }
+    var type = (document.querySelector('input[name="type"]:checked') || {}).value || "comment";
+    var item = sel.value || "page";
+    btn.disabled = true;
+    api("/api/notes", {method:"POST", body:{type:type, item:item, itemLabel:items[item], text:text}})
+      .then(function(d){
+        ta.value = ""; notice("");
+        S.notes.unshift(toEntry(d.note)); merge(); render(); renderBadges();
+      })
+      .catch(function(e){ handleErr(e, "Your note wasn't saved. Try again in a minute."); })
+      .then(function(){ btn.disabled = false; });
+  });
+
+  function setStatus(e, status, selEl){
+    selEl.disabled = true;
+    api("/api/status", {method:"POST", body:{number:e.number, status:status}})
+      .then(function(d){
+        var updated = toEntry(d.note);
+        S.notes = S.notes.map(function(x){ return x.number === updated.number ? updated : x; });
+        merge(); render(); renderBadges();
+      })
+      .catch(function(err){ selEl.value = e.status; selEl.disabled = false; handleErr(err, "The status wasn't saved. Try again in a minute."); });
+  }
+
+  /* ---------- loading ---------- */
+  function toEntry(n){ var e = Object.assign({kind:"note"}, n); if (!items[e.item]) e.item = "page"; return e; }
+  function merge(){
+    var ups = PAGE_UPDATES.map(function(u){ return {kind:"update", type:"update", item:u.item || "page", text:u.text, version:u.version, at:u.date + "T12:00:00Z", dateOnly:true}; });
+    S.entries = S.notes.concat(ups).sort(function(a,b){ return new Date(b.at) - new Date(a.at); });
+  }
+  function load(){
+    merge(); render(); renderBadges();
+    notice("Loading notes…");
+    api("/api/notes").then(function(d){
+      S.notes = (d.notes || []).map(toEntry);
+      notice(""); merge(); render(); renderBadges();
+    }).catch(function(e){ handleErr(e, "Notes couldn't load. Choose Refresh to try again."); });
+  }
+
+  /* ---------- rendering ---------- */
+  function renderBadges(){
+    var count = {}, open = {}, totalOpen = 0;
+    S.entries.forEach(function(e){
+      if (e.kind !== "note") return;
+      count[e.item] = (count[e.item]||0) + 1;
+      if (isActionable(e)){ open[e.item] = (open[e.item]||0) + 1; totalOpen++; }
+    });
+    document.getElementById("openCount").textContent = totalOpen;
+    document.getElementById("fActionN").textContent = "(" + totalOpen + ")";
+    document.querySelectorAll("[data-notes]").forEach(function(slot){
+      var id = slot.getAttribute("data-notes"), b = slot.querySelector("button"), c = count[id] || 0, o = open[id] || 0;
+      b.textContent = ""; b.classList.toggle("has-open", o > 0);
+      if (c){
+        b.appendChild(document.createTextNode(c + (c === 1 ? " note" : " notes")));
+        if (o) b.appendChild(h("span", {class:"c"}, ", " + o + " open"));
+        b.onclick = function(){ sel.value = id; setItemFilter(id); document.getElementById("change-log").scrollIntoView({block:"start"}); };
+      } else { b.appendChild(document.createTextNode("Add note")); b.onclick = function(){ openComposerFor(id); }; }
+    });
+  }
+  function matches(e){
+    if (S.person && e.by !== S.person) return false;
+    if (S.item && e.item !== S.item) return false;
+    if (S.filter === "action") return isActionable(e);
+    if (S.filter === "notes") return e.kind === "note";
+    if (S.filter === "updates") return e.kind === "update";
+    return true;
+  }
+  function render(){
+    var pf = document.getElementById("personFilter"), cur = pf.value, people = {};
+    S.entries.forEach(function(e){ if (e.by) people[e.by] = e.name || e.by; });
+    pf.textContent = ""; pf.appendChild(h("option", {value:"", text:"Everyone"}));
+    Object.keys(people).sort(function(a,b){ return people[a].localeCompare(people[b]); }).forEach(function(k){
+      pf.appendChild(h("option", {value:k, text:people[k] + (S.me && S.me.email === k ? " (you)" : "")}));
+    });
+    pf.value = people[cur] ? cur : ""; S.person = pf.value;
+
+    var list = document.getElementById("entries"); list.textContent = "";
+    var shown = S.entries.filter(matches);
+    if (!shown.length){
+      list.appendChild(h("div", {class:"empty", text: S.filter === "action" ? "Nothing waiting on the developer. Change requests and questions show up here until they're marked done." : "No activity matches these filters."}));
+      return;
+    }
+    shown.forEach(function(e){ list.appendChild(entryEl(e)); });
+  }
+  function entryEl(e){
+    var sys = e.kind === "update";
+    var av = sys ? h("div", {class:"av sys", "aria-hidden":"true"}, "R")
+                 : h("div", {class:"av init", "aria-hidden":"true", style:"background:" + colorFor(e.by)}, initials(e.name || e.by));
+    var who = sys ? "Page update" : (e.name || e.by || "Someone");
+    var top = h("div", {class:"e-top"}, h("span", {class:"nm", text:who, title: sys ? null : e.by}),
+      h("time", {datetime:e.at, title:fmt(e.at, e.dateOnly), text: e.dateOnly ? fmt(e.at, true) : rel(e.at)}));
+    var on = items[e.item] ? h("div", {class:"e-on"}, "On ", h("button", {type:"button", onclick:function(){ jumpTo(e.item); }, text:items[e.item]})) : null;
+    var meta = h("div", {class:"e-meta"}, h("span", {class:"tag " + e.type, text:TYPE_LABEL[e.type] || "Note"}));
+    if (sys) meta.appendChild(h("span", {class:"st", text:"Version " + e.version}));
+    if (e.kind === "note" && DEV_TYPES[e.type]){
+      if (S.me && S.me.admin){
+        var s = h("select", {class:"st-select", "aria-label":"Status"});
+        Object.keys(STATUS_LABEL).forEach(function(k){ s.appendChild(h("option", {value:k, text:STATUS_LABEL[k], selected:k === e.status})); });
+        s.addEventListener("change", function(){ setStatus(e, s.value, s); });
+        meta.appendChild(s);
+      } else meta.appendChild(h("span", {class:"st " + e.status, text:STATUS_LABEL[e.status]}));
+    }
+    if (e.url) meta.appendChild(h("a", {class:"gh", href:e.url, target:"_blank", rel:"noopener", text:"#" + e.number + (e.comments ? ", " + e.comments + (e.comments === 1 ? " reply" : " replies") : "") + " on GitHub"}));
+    var body = h("div", null, top, on, h("p", {class:"e-text", text:e.text}), meta);
+    if (e.closedAt && e.kind === "note") body.appendChild(h("div", {class:"hist", text:"Closed " + fmt(e.closedAt)}));
+    return h("article", {class:"entry"}, av, body);
+  }
+
+  load();
+})();
+</script>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tabs [role="tab"]'));
+  function pick(t){ tabs.forEach(function(x){ var on=x===t; x.setAttribute("aria-selected",on?"true":"false"); x.tabIndex=on?0:-1; document.getElementById(x.getAttribute("aria-controls")).hidden=!on; }); }
+  tabs.forEach(function(t,i){
+    t.addEventListener("click",function(){pick(t);});
+    t.addEventListener("keydown",function(e){ if(e.key==="ArrowRight"||e.key==="ArrowLeft"){ var n=tabs[(i+(e.key==="ArrowRight"?1:tabs.length-1))%tabs.length]; pick(n); n.focus(); } });
+  });
+})();
+</script>
+</body>
+</html>
