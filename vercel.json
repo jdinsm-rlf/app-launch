@@ -1,0 +1,24 @@
+{
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "public",
+  "functions": {
+    "api/app.js": { "includeFiles": "private/**" }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/api/app?r=page" },
+    { "source": "/auth/login", "destination": "/api/app?r=login" },
+    { "source": "/auth/callback", "destination": "/api/app?r=callback" },
+    { "source": "/auth/logout", "destination": "/api/app?r=logout" },
+    { "source": "/auth/me", "destination": "/api/app?r=me" },
+    { "source": "/api/notes", "destination": "/api/app?r=notes" },
+    { "source": "/api/status", "destination": "/api/app?r=status" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+      { "key": "X-Frame-Options", "value": "DENY" },
+      { "key": "Referrer-Policy", "value": "same-origin" }
+    ] }
+  ]
+}

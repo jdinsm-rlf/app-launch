@@ -1,0 +1,9 @@
+{
+  "name": "rlg-app-launch",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "jose": "5.9.6"
+  }
+}
